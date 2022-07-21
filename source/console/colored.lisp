@@ -106,8 +106,11 @@
     (if (boundp name)
       (symbol-value name))))
 
+(defmacro string-empty (string)
+  `(or (null ,string) (zerop (length ,string))))
+
 (defun color (color)
-  (if (> (length color) 1)
+  (if (not (string-empty color))
     (let ((context (colored-context color)))
       (if (and context)
         (let ((color (colored-string-as-constant (subseq color 1))))
